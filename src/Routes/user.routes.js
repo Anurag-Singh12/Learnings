@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { registerUser } from "../Controllers/user.controller.js";
-import {upload} from "../middlewares/multer.middleware.js"
+import {upload} from "../middlewares/multer.middleware.js"   //multer middleware (not default export so, we have to import by using{} and same name as export)
 
 //declare/initialize in variable
 
 const router = Router();
 
 router.route("/register").post(
-  upload.fields([           //multer middleware
+  upload.fields([                                 //multer middleware
     {
       name: "avatar",
       maxCount: 1,
@@ -17,7 +17,7 @@ router.route("/register").post(
       maxCount: 1,
     },
   ]),
-  registerUser
+  registerUser                    //this is a proper controller (ftn)
 );
 
 

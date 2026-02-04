@@ -19,7 +19,7 @@ const videoSchema = new Schema(
       type: String,
       required: true,
     },
-    duration: {
+    duration: {      //info taken by cloudinary
       type: Number,
       required: true,
     },
@@ -41,6 +41,6 @@ const videoSchema = new Schema(
   }
 );
 
-videoSchema.plugin(mongooseAggregatePaginate);
+videoSchema.plugin(mongooseAggregatePaginate);   //mongooseAggregatePaginate package will be used as plugin for agg. pipelines
 
 export const Video = mongoose.model("Video", videoSchema);

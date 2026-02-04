@@ -34,7 +34,7 @@ const userSchema = new Schema(
     },
     watchHistory: [
       {
-        type: Schema.Types.ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: "Video",
       },
     ],
@@ -51,14 +51,14 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.pre("save", async function () {   //removing next function here as in mongoose new version it's not required 
-  if (!this.isModified("password")) return;
+userSchema.pre("save", async function () {   //removing next function here as in mongoose new version it's not required and don't use arrow ftn b/c we can use this. in that
+  if (!this.isModified("password")) return;     //not to save data every time 
 
-  this.password = await bcrypt.hash(this.password, 10);
+  this.password = await bcrypt.hash(this.password, 10);          //bcrypt.hash
 });
 
 userSchema.methods.isPasswordCorrect = async function (password) {
-  return await bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);          //compare given pass with saved encrypted pass
 };
 
 userSchema.methods.generateAccessToken = function () {
@@ -75,6 +75,7 @@ userSchema.methods.generateAccessToken = function () {
     }
   );
 };
+
 userSchema.methods.generateRefreshToken = function () {
   return jwt.sign(
     {
