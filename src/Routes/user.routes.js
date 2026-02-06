@@ -1,6 +1,7 @@
 import { Router } from "express";
-import { registerUser } from "../Controllers/user.controller.js";
+import { loginUser, logoutUser, registerUser } from "../Controllers/user.controller.js";
 import {upload} from "../middlewares/multer.middleware.js"   //multer middleware (not default export so, we have to import by using{} and same name as export)
+import { verifyJWT } from "../Middlewares/auth.middleware.js";
 
 //declare/initialize in variable
 
@@ -20,10 +21,13 @@ router.route("/register").post(
   registerUser                    //this is a proper controller (ftn)
 );
 
-
-
 //router.route("/register").post(registerUser)             //http/localhost:8000/api/v1/users/register
 // router.route("/login").post(logincode)                //http/localhost:8000/api/v1/users/login
+
+router.route("/login").post(loginUser)
+
+//secured routes
+router.route("/logout").post(verifyJWT, logoutUser )
 
 
 export default router;
